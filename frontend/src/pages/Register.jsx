@@ -17,7 +17,7 @@ const Register = () => {
       const res = await API.post("/auth/register", { email, password });
       setApiKey(res.data.apiKey);
     } catch (error) {
-      setError(getApiErrorMessage(error, "Registration failed. Try a different email."));
+      setError(getApiErrorMessage(error, "Registration failed. Backend may be unavailable."));
     }
   };
 
