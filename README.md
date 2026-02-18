@@ -102,6 +102,40 @@ After pushing to `main`, frontend deploys automatically to:
 To allow frontend calls from GitHub Pages, set backend `CORS_ORIGIN` to your pages URL:
 - `https://<your-github-username>.github.io`
 
+## Deploy Backend on Render
+
+This repo now includes `render.yaml` for Render Blueprint deploy.
+
+### 1. Prepare MongoDB (Atlas)
+
+Render does not provide managed MongoDB in this setup, so create a MongoDB Atlas cluster and copy its connection string.
+
+### 2. Create Render services from Blueprint
+
+1. In Render dashboard, click `New` -> `Blueprint`.
+2. Connect this GitHub repo: `https://github.com/Sayantanmaji2005/api-rate-limiter`.
+3. Render reads `render.yaml` and creates:
+   - `api-rate-limiter-backend` (Node web service)
+   - `api-rate-limiter-redis` (Redis)
+
+### 3. Set required backend env vars in Render
+
+In `api-rate-limiter-backend` -> `Environment`, set:
+- `JWT_SECRET` = strong random secret
+- `MONGO_URI` = your Atlas connection string
+- `CORS_ORIGIN` = `https://sayantanmaji2005.github.io`
+
+`REDIS_URL` is auto-wired from the Render Redis service via `render.yaml`.
+
+### 4. Use backend URL in GitHub Pages build
+
+After backend is live, copy its public URL (for example `https://api-rate-limiter-backend.onrender.com`) and set:
+
+GitHub repo -> `Settings` -> `Secrets and variables` -> `Actions` -> `Variables`:
+- `VITE_API_URL` = your Render backend URL
+
+Then re-run workflow `Deploy Frontend to GitHub Pages`.
+
 ## Backend Environment
 Create `backend/.env`:
 
