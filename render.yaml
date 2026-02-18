@@ -28,3 +28,4 @@ services:
     name: api-rate-limiter-redis
     plan: free
     maxmemoryPolicy: noeviction
+    ipAllowList: []
