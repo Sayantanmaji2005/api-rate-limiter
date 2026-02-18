@@ -14,6 +14,7 @@ function App() {
       <div className="app-shell">
         <div className="bg-orb bg-orb-one" />
         <div className="bg-orb bg-orb-two" />
+        <div className="corner-tag">the web shit is made by Sayantan Maji</div>
         <Navbar />
         <main className="app-main container">
           <Routes>
