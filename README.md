@@ -105,6 +105,8 @@ To allow frontend calls from GitHub Pages, set backend `CORS_ORIGIN` to your pag
 ## Deploy Backend on Render
 
 This repo now includes `render.yaml` for Render Blueprint deploy.
+One-click deploy link:
+- `https://render.com/deploy?repo=https://github.com/Sayantanmaji2005/api-rate-limiter`
 
 ### 1. Prepare MongoDB (Atlas)
 
