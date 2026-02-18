@@ -53,6 +53,10 @@ jobs:
         shell: bash
         run: touch frontend/dist/.nojekyll
 
+      - name: Add SPA fallback
+        shell: bash
+        run: cp frontend/dist/index.html frontend/dist/404.html
+
       - name: Deploy to gh-pages branch
         uses: peaceiris/actions-gh-pages@v4
         with:
