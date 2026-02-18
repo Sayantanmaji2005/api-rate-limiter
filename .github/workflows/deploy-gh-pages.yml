@@ -1,4 +1,4 @@
-name: Deploy Frontend to GitHub Pages
+name: Deploy Frontend (gh-pages)
 
 on:
   push:
@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: "pages"
+  group: "gh-pages"
   cancel-in-progress: true
 
 jobs:
