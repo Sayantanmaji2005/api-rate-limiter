@@ -63,11 +63,16 @@ function startHttpServer() {
   });
 }
 
-connectDB()
-  .then(() => {
-    startHttpServer();
-  })
-  .catch((err) => {
-    console.error("Startup failed:", err.message);
-    process.exit(1);
-  });
+async function connectMongoWithRetry(attempt = 1) {
+  try {
+    await connectDB();
+  } catch (err) {
+    console.error(`Mongo connect failed (attempt ${attempt}): ${err.message}`);
+    setTimeout(() => {
+      connectMongoWithRetry(attempt + 1);
+    }, 10000);
+  }
+}
+
+startHttpServer();
+connectMongoWithRetry();
