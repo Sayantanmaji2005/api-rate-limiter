@@ -35,6 +35,73 @@ npm run dev
 
 Frontend runs on `http://localhost:5173` and proxies backend calls to `VITE_API_URL` (default: `http://localhost:5001`).
 
+## Deploy (Docker Compose - Recommended)
+
+This repo now includes:
+- `backend/Dockerfile`
+- `frontend/Dockerfile`
+- `frontend/nginx.conf` (serves React app + proxies API routes to backend)
+- `docker-compose.prod.yml`
+
+### 1. Prepare environment
+Create `backend/.env` from `backend/.env.example` and set at least:
+
+```env
+JWT_SECRET=replace_with_a_long_random_secret
+```
+
+You can keep these defaults when using `docker-compose.prod.yml`:
+- `PORT=5001`
+- `MONGO_URI` is overridden to `mongodb://mongo:27017/api-rate-limiter`
+- `REDIS_URL` is overridden to `redis://redis:6379`
+
+### 2. Build and start
+
+```bash
+docker compose -f docker-compose.prod.yml up -d --build
+```
+
+### 3. Verify deployment
+
+```bash
+docker compose -f docker-compose.prod.yml ps
+curl http://localhost:8080/health
+```
+
+Open app at `http://localhost:8080`.
+
+### 4. Stop deployment
+
+```bash
+docker compose -f docker-compose.prod.yml down
+```
+
+Add `-v` to also remove Mongo/Redis volumes:
+
+```bash
+docker compose -f docker-compose.prod.yml down -v
+```
+
+## Deploy Frontend with GitHub Pages (Project Link)
+
+If you want a public project URL directly from GitHub, this repo now includes:
+- `.github/workflows/deploy-pages.yml`
+
+After pushing to `main`, frontend deploys automatically to:
+- `https://<your-github-username>.github.io/<your-repo-name>/`
+
+### GitHub setup steps
+
+1. Push your latest code to GitHub (`main` branch).
+2. In GitHub repo settings, open `Pages` and set `Source` to `GitHub Actions`.
+3. In GitHub repo settings, open `Secrets and variables` -> `Actions` -> `Variables`.
+4. Add repository variable:
+   - `VITE_API_URL` = your backend public URL (example: `https://your-api.onrender.com`)
+5. Re-run workflow `Deploy Frontend to GitHub Pages` if needed.
+
+To allow frontend calls from GitHub Pages, set backend `CORS_ORIGIN` to your pages URL:
+- `https://<your-github-username>.github.io`
+
 ## Backend Environment
 Create `backend/.env`:
 
@@ -43,6 +110,7 @@ MONGO_URI=mongodb://127.0.0.1:27017/api-rate-limiter
 JWT_SECRET=change_this_secret
 REDIS_URL=redis://127.0.0.1:6379
 PORT=5001
+CORS_ORIGIN=http://localhost:5173
 ```
 
 ## Frontend Environment
@@ -53,6 +121,8 @@ VITE_API_URL=http://localhost:5001
 ```
 
 Keep `backend/.env` `PORT` and `frontend/.env` `VITE_API_URL` aligned to the same backend port.
+
+For separate frontend/backend deployments, set `backend/.env` `CORS_ORIGIN` to your frontend URL (comma-separated for multiple origins).
 
 ## Core Endpoints
 

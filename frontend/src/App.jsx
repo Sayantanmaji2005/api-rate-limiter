@@ -7,8 +7,10 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 
 function App() {
+  const routerBase = import.meta.env.BASE_URL === "/" ? "/" : import.meta.env.BASE_URL.replace(/\/$/, "");
+
   return (
-    <Router>
+    <Router basename={routerBase}>
       <div className="app-shell">
         <div className="bg-orb bg-orb-one" />
         <div className="bg-orb bg-orb-two" />
