@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RateLimiter Pro | Admin</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div class="app-shell">
+  <div class="bg-orb bg-orb-one"></div>
+  <div class="bg-orb bg-orb-two"></div>
+  <div class="corner-tag">the website is made by Sayantan Maji</div>
+
+  <nav class="navbar">
+    <div class="container navbar-inner">
+      <a href="/dashboard" class="brand">RateLimiter Pro</a>
+      <div class="nav-links" id="navLinks"></div>
+      <div class="nav-actions" id="navActions"></div>
+    </div>
+  </nav>
+
+  <main class="app-main container">
+    <section class="admin reveal">
+      <div class="panel">
+        <h2>Admin Control Center</h2>
+        <p class="muted">Manage plans and audit request behavior across users.</p>
+        <p id="adminError" class="error hidden"></p>
+
+        <div class="stats-grid">
+          <article class="stat-card"><h4>Total Requests</h4><p id="totalRequestsStat">0</p></article>
+          <article class="stat-card"><h4>Blocked</h4><p id="blockedRequestsStat">0</p></article>
+          <article class="stat-card"><h4>Avg Latency</h4><p id="avgLatencyStat">0 ms</p></article>
+          <article class="stat-card"><h4>Impacted Users</h4><p id="impactedUsersStat">0</p></article>
+        </div>
+
+        <h3>Users</h3>
+        <p id="usersEmpty" class="muted hidden">No users found.</p>
+        <div class="table-wrap">
+          <table class="styled-table">
+            <thead>
+            <tr>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Tier</th>
+              <th>Algorithm</th>
+              <th>Update Tier</th>
+              <th>IP Policy</th>
+              <th>Current Lists</th>
+            </tr>
+            </thead>
+            <tbody id="usersTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Recent Analytics</h3>
+        <p id="analyticsEmpty" class="muted hidden">No logs available.</p>
+        <ul id="analyticsList" class="log-list"></ul>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="/js/common.js"></script>
+<script src="/js/admin.js"></script>
+</body>
+</html>

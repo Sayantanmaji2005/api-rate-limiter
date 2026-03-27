@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RateLimiter Pro | Login</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div class="app-shell">
+  <div class="bg-orb bg-orb-one"></div>
+  <div class="bg-orb bg-orb-two"></div>
+  <div class="corner-tag">the website is made by Sayantan Maji</div>
+
+  <nav class="navbar">
+    <div class="container navbar-inner">
+      <a href="/dashboard" class="brand">RateLimiter Pro</a>
+      <div class="nav-links" id="navLinks"></div>
+      <div class="nav-actions" id="navActions"></div>
+    </div>
+  </nav>
+
+  <main class="app-main container">
+    <section class="panel narrow reveal">
+      <h2>Welcome Back</h2>
+      <p class="muted">Sign in to monitor traffic, limits, and analytics.</p>
+      <form id="loginForm" class="form-grid">
+        <label for="email">
+          Email
+          <input id="email" type="email" placeholder="you@company.com" required>
+        </label>
+        <label for="password">
+          Password
+          <input id="password" type="password" placeholder="Your password" required>
+        </label>
+        <button id="loginSubmit" type="submit" class="btn btn-primary">Login</button>
+        <p id="loginError" class="error hidden"></p>
+      </form>
+      <p class="muted">Don't have an account? <a href="/register">Register</a></p>
+    </section>
+  </main>
+</div>
+
+<script src="/js/common.js"></script>
+<script src="/js/login.js"></script>
+</body>
+</html>

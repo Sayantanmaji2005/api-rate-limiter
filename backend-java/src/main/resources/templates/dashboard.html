@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RateLimiter Pro | Dashboard</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div class="app-shell">
+  <div class="bg-orb bg-orb-one"></div>
+  <div class="bg-orb bg-orb-two"></div>
+  <div class="corner-tag">the website is made by Sayantan Maji</div>
+
+  <nav class="navbar">
+    <div class="container navbar-inner">
+      <a href="/dashboard" class="brand">RateLimiter Pro</a>
+      <div class="nav-links" id="navLinks"></div>
+      <div class="nav-actions" id="navActions"></div>
+    </div>
+  </nav>
+
+  <main class="app-main container">
+    <section class="dashboard reveal">
+      <div class="panel">
+        <h2>API Dashboard</h2>
+        <p class="muted">Live controls for algorithm, costs, and protected endpoints.</p>
+
+        <div class="stats-grid">
+          <article class="stat-card"><h4>Email</h4><p id="emailStat">N/A</p></article>
+          <article class="stat-card"><h4>Role</h4><p id="roleStat">N/A</p></article>
+          <article class="stat-card"><h4>Tier</h4><p id="tierStat">N/A</p></article>
+          <article class="stat-card"><h4>Algorithm</h4><p id="algorithmStat">TOKEN_BUCKET</p></article>
+          <article class="stat-card"><h4>Total Requests</h4><p id="totalRequestsStat">0</p></article>
+          <article class="stat-card"><h4>Blocked</h4><p id="blockedRequestsStat">0</p></article>
+          <article class="stat-card"><h4>Avg Latency</h4><p id="avgLatencyStat">0 ms</p></article>
+        </div>
+
+        <div class="callout">
+          <p>API key</p>
+          <code id="apiKeyCode">Unavailable</code>
+          <div class="actions">
+            <button id="copyApiKeyBtn" type="button" class="btn btn-outline">Copy API Key</button>
+            <button id="rotateApiKeyBtn" type="button" class="btn btn-outline">Rotate API Key</button>
+          </div>
+        </div>
+
+        <div class="actions">
+          <select id="algorithmSelect">
+            <option value="TOKEN_BUCKET">TOKEN_BUCKET</option>
+            <option value="SLIDING_WINDOW">SLIDING_WINDOW</option>
+          </select>
+          <button id="refreshCircuitBtn" type="button" class="btn btn-outline">Refresh Circuit Status</button>
+        </div>
+
+        <p id="limiterStatus" class="muted">Circuit Breaker: Loading...</p>
+
+        <div class="actions">
+          <button id="callProtectedBtn" type="button" class="btn btn-primary">Call Protected API</button>
+          <button id="callHeavyBtn" type="button" class="btn btn-primary">Call Heavy API (cost-based)</button>
+          <button id="refreshAnalyticsBtn" type="button" class="btn btn-outline">Refresh Analytics</button>
+          <button id="refreshSummaryBtn" type="button" class="btn btn-outline">Refresh Summary</button>
+        </div>
+
+        <div class="actions">
+          <input id="ruleEndpointInput" value="/api/heavy-data" placeholder="/api/your-endpoint">
+          <input id="ruleCostInput" type="number" min="1" max="20" value="5" placeholder="cost">
+          <button id="saveRuleBtn" type="button" class="btn btn-outline">Save Custom Rule</button>
+        </div>
+
+        <p id="dashboardMessage" class="message hidden"></p>
+      </div>
+
+      <div class="panel">
+        <h3>Recent Requests</h3>
+        <p id="analyticsState" class="muted">Loading analytics...</p>
+        <ul id="analyticsList" class="log-list"></ul>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="/js/common.js"></script>
+<script src="/js/dashboard.js"></script>
+</body>
+</html>

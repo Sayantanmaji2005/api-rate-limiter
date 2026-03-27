@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RateLimiter Pro | Register</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div class="app-shell">
+  <div class="bg-orb bg-orb-one"></div>
+  <div class="bg-orb bg-orb-two"></div>
+  <div class="corner-tag">the website is made by Sayantan Maji</div>
+
+  <nav class="navbar">
+    <div class="container navbar-inner">
+      <a href="/dashboard" class="brand">RateLimiter Pro</a>
+      <div class="nav-links" id="navLinks"></div>
+      <div class="nav-actions" id="navActions"></div>
+    </div>
+  </nav>
+
+  <main class="app-main container">
+    <section class="panel narrow reveal">
+      <h2>Create Account</h2>
+      <p class="muted">Start with FREE tier and upgrade anytime.</p>
+      <form id="registerForm" class="form-grid">
+        <label for="email">
+          Email
+          <input id="email" type="email" placeholder="you@company.com" required>
+        </label>
+        <label for="password">
+          Password
+          <input id="password" type="password" placeholder="Choose a strong password" minlength="8" required>
+        </label>
+        <button id="registerSubmit" type="submit" class="btn btn-primary">Register</button>
+        <p id="registerError" class="error hidden"></p>
+      </form>
+
+      <div id="apiKeyPanel" class="callout success hidden">
+        <p>API key generated:</p>
+        <code id="apiKeyValue"></code>
+        <button id="continueToLogin" type="button" class="btn btn-outline">Continue to login</button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="/js/common.js"></script>
+<script src="/js/register.js"></script>
+</body>
+</html>
