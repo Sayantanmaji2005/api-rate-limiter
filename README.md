@@ -35,6 +35,13 @@ cd backend-java
 mvn spring-boot:run
 ```
 
+### VS Code Terminal (copy-paste)
+
+```powershell
+cd backend-java
+mvn spring-boot:run
+```
+
 Open the app at:
 - `http://localhost:5001/dashboard`
 - Browser opens automatically on startup (configurable).
