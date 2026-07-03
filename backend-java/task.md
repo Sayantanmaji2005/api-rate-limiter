@@ -1,17 +1,27 @@
-- [x] Concurrency & Atomicity Enhancements in `RedisMemoryStore.java`
-- [x] Simplify `TokenBucketService.java` to delegate to `RedisMemoryStore`
-- [x] Simplify `SlidingWindowService.java` to delegate to `RedisMemoryStore`
-- [x] Implement declarative `@RateLimited` annotation
-- [x] Implement `RateLimiterInterceptor`
-- [x] Register interceptor in `CorsConfig.java`
-- [x] Simplify `ProtectedApiController.java` to use `@RateLimited`
-- [x] Create unit tests:
-  - [x] `TokenBucketServiceTest`
-  - [x] `SlidingWindowServiceTest`
-  - [x] `CircuitBreakerServiceTest`
-  - [x] ...
-- [x] Verify compilation and tests passing using `mvn test`
-- [x] Add allowed/blocked stats to `/admin/users` in `AdminController.java`
-- [x] Add Usage column header to `admin.html`
-- [x] Render Usage stats (allowed/blocked/total) in `admin.js`
-- [x] Verify server starts up and compiles cleanly
+- [ ] Move static files from `frontend/` to the workspace root directory
+- [ ] Create `package.json` with dependencies (`mongodb`, `jsonwebtoken`, `bcryptjs`, `redis`)
+- [ ] Create MongoDB/Redis database connections helper (`api/lib/db.js`)
+- [ ] Implement JWT/Auth middleware helper (`api/lib/auth.js`)
+- [ ] Implement rate limiter algorithms helper (`api/lib/limiter.js`)
+- [ ] Create Auth endpoints:
+  - [ ] `api/auth/register.js`
+  - [ ] `api/auth/login.js`
+  - [ ] `api/auth/me.js`
+  - [ ] `api/auth/rotate-api-key.js`
+- [ ] Create API endpoints:
+  - [ ] `api/api/data.js`
+  - [ ] `api/api/heavy-data.js`
+  - [ ] `api/api/analytics.js`
+  - [ ] `api/api/analytics/summary.js`
+  - [ ] `api/api/settings/algorithm.js`
+  - [ ] `api/api/settings/rules.js`
+  - [ ] `api/api/limiter-status.js`
+- [ ] Create Admin endpoints:
+  - [ ] `api/admin/users.js`
+  - [ ] `api/admin/analytics.js`
+  - [ ] `api/admin/analytics/summary.js`
+  - [ ] `api/admin/users/upgrade.js` (handles upgrade)
+  - [ ] `api/admin/users/algorithm.js` (handles algorithm update)
+  - [ ] `api/admin/users/policy.js` (handles whitelist/blacklist updates)
+- [ ] Update redirects/paths in `common.js` and HTML files to be root-level relative
+- [ ] Commit and push changes to GitHub

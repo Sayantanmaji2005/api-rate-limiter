@@ -1,7 +1,5 @@
 const REQUEST_TIMEOUT_MS = 30000;
-const API_BASE_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-  ? "http://localhost:5001"
-  : "https://api-rate-limiter-backend-otko.onrender.com";
+const API_BASE_URL = "";
 
 function getToken() {
   return localStorage.getItem("token");
