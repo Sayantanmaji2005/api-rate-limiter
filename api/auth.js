@@ -7,12 +7,11 @@ const { JWT_SECRET, setCorsHeaders, verifyToken } = require('./lib/auth');
 module.exports = async function handler(req, res) {
   if (setCorsHeaders(req, res)) return;
 
-  const url = new URL(req.url, `http://${req.headers.host}`);
-  const pathname = url.pathname;
+  const route = req.query.route;
 
   try {
     // 1. REGISTER
-    if (pathname === '/auth/register' && req.method === 'POST') {
+    if (route === 'register' && req.method === 'POST') {
       const { email, password } = req.body;
       if (!email || !password) {
         return res.status(400).json({ msg: 'Email and password are required.' });
@@ -47,7 +46,7 @@ module.exports = async function handler(req, res) {
     }
 
     // 2. LOGIN
-    if (pathname === '/auth/login' && req.method === 'POST') {
+    if (route === 'login' && req.method === 'POST') {
       const { email, password } = req.body;
       if (!email || !password) {
         return res.status(400).json({ msg: 'Email and password are required.' });
@@ -69,7 +68,7 @@ module.exports = async function handler(req, res) {
     }
 
     // 3. ME (Profile info)
-    if (pathname === '/auth/me' && req.method === 'GET') {
+    if (route === 'me' && req.method === 'GET') {
       const user = await verifyToken(req);
       if (!user) {
         return res.status(401).json({ msg: 'Unauthorized' });
@@ -89,7 +88,7 @@ module.exports = async function handler(req, res) {
     }
 
     // 4. ROTATE API KEY
-    if (pathname === '/auth/rotate-api-key' && req.method === 'POST') {
+    if (route === 'rotate-api-key' && req.method === 'POST') {
       const user = await verifyToken(req);
       if (!user) {
         return res.status(401).json({ msg: 'Unauthorized' });

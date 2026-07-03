@@ -10,15 +10,14 @@ module.exports = async function handler(req, res) {
     return res.status(403).json({ msg: 'Forbidden' });
   }
 
-  const url = new URL(req.url, `http://${req.headers.host}`);
-  const pathname = url.pathname;
+  const route = req.query.route;
   const method = req.method;
 
   try {
     const db = await connectDb();
 
-    // 1. GET /api/admin/users
-    if (pathname === '/admin/users' && method === 'GET') {
+    // 1. GET /admin/users
+    if (route === 'users' && method === 'GET') {
       const users = await db.collection('users').find().toArray();
       const enrichedUsers = await Promise.all(users.map(async (u) => {
         const stats = await db.collection('analytics').aggregate([
@@ -51,8 +50,8 @@ module.exports = async function handler(req, res) {
       return res.status(200).json(enrichedUsers);
     }
 
-    // 2. GET /api/admin/analytics
-    if (pathname === '/admin/analytics' && method === 'GET') {
+    // 2. GET /admin/analytics
+    if (route === 'analytics' && method === 'GET') {
       const logs = await db.collection('analytics')
         .find()
         .sort({ timestamp: -1 })
@@ -61,8 +60,8 @@ module.exports = async function handler(req, res) {
       return res.status(200).json(logs);
     }
 
-    // 3. GET /api/admin/analytics/summary
-    if (pathname === '/admin/analytics/summary' && method === 'GET') {
+    // 3. GET /admin/analytics/summary
+    if (route === 'analytics/summary' && method === 'GET') {
       const stats = await db.collection('analytics').aggregate([
         {
           $group: {
@@ -91,8 +90,8 @@ module.exports = async function handler(req, res) {
       });
     }
 
-    // 4. PUT /api/admin/upgrade/:id
-    const upgradeMatch = pathname.match(/^\/admin\/upgrade\/([^/]+)$/);
+    // 4. PUT /admin/upgrade/:id
+    const upgradeMatch = route ? route.match(/^upgrade\/([^/]+)$/) : null;
     if (upgradeMatch && method === 'PUT') {
       const id = upgradeMatch[1];
       const { tier } = req.body;
@@ -112,8 +111,8 @@ module.exports = async function handler(req, res) {
       return res.status(200).json({ msg: `User tier upgraded to ${tier}.` });
     }
 
-    // 5. PUT /api/admin/users/:id/algorithm
-    const algoMatch = pathname.match(/^\/admin\/users\/([^/]+)\/algorithm$/);
+    // 5. PUT /admin/users/:id/algorithm
+    const algoMatch = route ? route.match(/^users\/([^/]+)\/algorithm$/) : null;
     if (algoMatch && method === 'PUT') {
       const id = algoMatch[1];
       const { algorithm } = req.body;
@@ -133,8 +132,8 @@ module.exports = async function handler(req, res) {
       return res.status(200).json({ msg: 'Algorithm updated successfully.' });
     }
 
-    // 6. PUT /api/admin/users/:id/:field (whitelist or blacklist)
-    const policyMatch = pathname.match(/^\/admin\/users\/([^/]+)\/(whitelist|blacklist)$/);
+    // 6. PUT /admin/users/:id/:field (whitelist or blacklist)
+    const policyMatch = route ? route.match(/^users\/([^/]+)\/(whitelist|blacklist)$/) : null;
     if (policyMatch && method === 'PUT') {
       const id = policyMatch[1];
       const field = policyMatch[2];

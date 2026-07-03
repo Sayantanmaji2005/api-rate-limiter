@@ -10,15 +10,14 @@ module.exports = async function handler(req, res) {
     return res.status(401).json({ msg: 'Unauthorized' });
   }
 
-  const url = new URL(req.url, `http://${req.headers.host}`);
-  const pathname = url.pathname;
+  const route = req.query.route;
   const method = req.method;
 
   try {
     const db = await connectDb();
 
-    // 1. GET /api/api/data
-    if (pathname === '/api/data' && method === 'GET') {
+    // 1. GET /api/data
+    if (route === 'data' && method === 'GET') {
       const startTime = Date.now();
       const clientIp = req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || '127.0.0.1';
       
@@ -41,8 +40,8 @@ module.exports = async function handler(req, res) {
       });
     }
 
-    // 2. GET /api/api/heavy-data
-    if (pathname === '/api/heavy-data' && method === 'GET') {
+    // 2. GET /api/heavy-data
+    if (route === 'heavy-data' && method === 'GET') {
       const cb = await getCircuitBreaker();
       if (cb.state === 'OPEN') {
         return res.status(503).json({
@@ -84,8 +83,8 @@ module.exports = async function handler(req, res) {
       }
     }
 
-    // 3. GET /api/api/analytics
-    if (pathname === '/api/analytics' && method === 'GET') {
+    // 3. GET /api/analytics
+    if (route === 'analytics' && method === 'GET') {
       const logs = await db.collection('analytics')
         .find({ userId: user._id })
         .sort({ timestamp: -1 })
@@ -94,8 +93,8 @@ module.exports = async function handler(req, res) {
       return res.status(200).json(logs);
     }
 
-    // 4. GET /api/api/analytics/summary
-    if (pathname === '/api/analytics/summary' && method === 'GET') {
+    // 4. GET /api/analytics/summary
+    if (route === 'analytics/summary' && method === 'GET') {
       const stats = await db.collection('analytics').aggregate([
         { $match: { userId: user._id } },
         {
@@ -116,8 +115,8 @@ module.exports = async function handler(req, res) {
       });
     }
 
-    // 5. PUT /api/api/settings/algorithm
-    if (pathname === '/api/settings/algorithm' && method === 'PUT') {
+    // 5. PUT /api/settings/algorithm
+    if (route === 'settings/algorithm' && method === 'PUT') {
       const { algorithm } = req.body;
       if (!algorithm || (algorithm !== 'TOKEN_BUCKET' && algorithm !== 'SLIDING_WINDOW')) {
         return res.status(400).json({ msg: 'Invalid algorithm specified.' });
@@ -130,8 +129,8 @@ module.exports = async function handler(req, res) {
       return res.status(200).json({ msg: 'Rate limiting algorithm updated.' });
     }
 
-    // 6. PUT /api/api/settings/rules
-    if (pathname === '/api/settings/rules' && method === 'PUT') {
+    // 6. PUT /api/settings/rules
+    if (route === 'settings/rules' && method === 'PUT') {
       const { endpoint, cost } = req.body;
       if (!endpoint || cost === undefined || cost === null) {
         return res.status(400).json({ msg: 'Endpoint and cost are required.' });
@@ -147,8 +146,8 @@ module.exports = async function handler(req, res) {
       return res.status(200).json({ msg: `Custom rule saved.` });
     }
 
-    // 7. GET /api/api/limiter-status
-    if (pathname === '/api/limiter-status' && method === 'GET') {
+    // 7. GET /api/limiter-status
+    if (route === 'limiter-status' && method === 'GET') {
       const cb = await getCircuitBreaker();
       return res.status(200).json({
         circuitBreaker: { state: cb.state, failureCount: cb.failureCount }
