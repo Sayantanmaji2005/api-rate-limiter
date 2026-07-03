@@ -12,22 +12,10 @@ services:
       - key: MONGO_URI
         sync: false
       - key: REDIS_URL
-        fromService:
-          type: redis
-          name: api-rate-limiter-redis
-          property: connectionString
+        sync: false
       - key: SPRING_REDIS_URL
-        fromService:
-          type: redis
-          name: api-rate-limiter-redis
-          property: connectionString
+        sync: false
       - key: CORS_ORIGIN
         sync: false
       - key: OPEN_BROWSER_ON_STARTUP
         value: "false"
-
-  - type: redis
-    name: api-rate-limiter-redis
-    plan: free
-    maxmemoryPolicy: noeviction
-    ipAllowList: []
