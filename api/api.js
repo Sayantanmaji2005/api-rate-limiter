@@ -18,7 +18,7 @@ module.exports = async function handler(req, res) {
     const db = await connectDb();
 
     // 1. GET /api/api/data
-    if (pathname === '/api/api/data' && method === 'GET') {
+    if (pathname === '/api/data' && method === 'GET') {
       const startTime = Date.now();
       const clientIp = req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || '127.0.0.1';
       
@@ -42,7 +42,7 @@ module.exports = async function handler(req, res) {
     }
 
     // 2. GET /api/api/heavy-data
-    if (pathname === '/api/api/heavy-data' && method === 'GET') {
+    if (pathname === '/api/heavy-data' && method === 'GET') {
       const cb = await getCircuitBreaker();
       if (cb.state === 'OPEN') {
         return res.status(503).json({
@@ -85,7 +85,7 @@ module.exports = async function handler(req, res) {
     }
 
     // 3. GET /api/api/analytics
-    if (pathname === '/api/api/analytics' && method === 'GET') {
+    if (pathname === '/api/analytics' && method === 'GET') {
       const logs = await db.collection('analytics')
         .find({ userId: user._id })
         .sort({ timestamp: -1 })
@@ -95,7 +95,7 @@ module.exports = async function handler(req, res) {
     }
 
     // 4. GET /api/api/analytics/summary
-    if (pathname === '/api/api/analytics/summary' && method === 'GET') {
+    if (pathname === '/api/analytics/summary' && method === 'GET') {
       const stats = await db.collection('analytics').aggregate([
         { $match: { userId: user._id } },
         {
@@ -117,7 +117,7 @@ module.exports = async function handler(req, res) {
     }
 
     // 5. PUT /api/api/settings/algorithm
-    if (pathname === '/api/api/settings/algorithm' && method === 'PUT') {
+    if (pathname === '/api/settings/algorithm' && method === 'PUT') {
       const { algorithm } = req.body;
       if (!algorithm || (algorithm !== 'TOKEN_BUCKET' && algorithm !== 'SLIDING_WINDOW')) {
         return res.status(400).json({ msg: 'Invalid algorithm specified.' });
@@ -131,7 +131,7 @@ module.exports = async function handler(req, res) {
     }
 
     // 6. PUT /api/api/settings/rules
-    if (pathname === '/api/api/settings/rules' && method === 'PUT') {
+    if (pathname === '/api/settings/rules' && method === 'PUT') {
       const { endpoint, cost } = req.body;
       if (!endpoint || cost === undefined || cost === null) {
         return res.status(400).json({ msg: 'Endpoint and cost are required.' });
@@ -148,7 +148,7 @@ module.exports = async function handler(req, res) {
     }
 
     // 7. GET /api/api/limiter-status
-    if (pathname === '/api/api/limiter-status' && method === 'GET') {
+    if (pathname === '/api/limiter-status' && method === 'GET') {
       const cb = await getCircuitBreaker();
       return res.status(200).json({
         circuitBreaker: { state: cb.state, failureCount: cb.failureCount }

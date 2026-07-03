@@ -18,7 +18,7 @@ module.exports = async function handler(req, res) {
     const db = await connectDb();
 
     // 1. GET /api/admin/users
-    if (pathname === '/api/admin/users' && method === 'GET') {
+    if (pathname === '/admin/users' && method === 'GET') {
       const users = await db.collection('users').find().toArray();
       const enrichedUsers = await Promise.all(users.map(async (u) => {
         const stats = await db.collection('analytics').aggregate([
@@ -52,7 +52,7 @@ module.exports = async function handler(req, res) {
     }
 
     // 2. GET /api/admin/analytics
-    if (pathname === '/api/admin/analytics' && method === 'GET') {
+    if (pathname === '/admin/analytics' && method === 'GET') {
       const logs = await db.collection('analytics')
         .find()
         .sort({ timestamp: -1 })
@@ -62,7 +62,7 @@ module.exports = async function handler(req, res) {
     }
 
     // 3. GET /api/admin/analytics/summary
-    if (pathname === '/api/admin/analytics/summary' && method === 'GET') {
+    if (pathname === '/admin/analytics/summary' && method === 'GET') {
       const stats = await db.collection('analytics').aggregate([
         {
           $group: {
@@ -92,7 +92,7 @@ module.exports = async function handler(req, res) {
     }
 
     // 4. PUT /api/admin/upgrade/:id
-    const upgradeMatch = pathname.match(/^\/api\/admin\/upgrade\/([^/]+)$/);
+    const upgradeMatch = pathname.match(/^\/admin\/upgrade\/([^/]+)$/);
     if (upgradeMatch && method === 'PUT') {
       const id = upgradeMatch[1];
       const { tier } = req.body;
@@ -113,7 +113,7 @@ module.exports = async function handler(req, res) {
     }
 
     // 5. PUT /api/admin/users/:id/algorithm
-    const algoMatch = pathname.match(/^\/api\/admin\/users\/([^/]+)\/algorithm$/);
+    const algoMatch = pathname.match(/^\/admin\/users\/([^/]+)\/algorithm$/);
     if (algoMatch && method === 'PUT') {
       const id = algoMatch[1];
       const { algorithm } = req.body;
@@ -134,7 +134,7 @@ module.exports = async function handler(req, res) {
     }
 
     // 6. PUT /api/admin/users/:id/:field (whitelist or blacklist)
-    const policyMatch = pathname.match(/^\/api\/admin\/users\/([^/]+)\/(whitelist|blacklist)$/);
+    const policyMatch = pathname.match(/^\/admin\/users\/([^/]+)\/(whitelist|blacklist)$/);
     if (policyMatch && method === 'PUT') {
       const id = policyMatch[1];
       const field = policyMatch[2];

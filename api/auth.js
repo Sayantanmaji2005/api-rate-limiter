@@ -12,7 +12,7 @@ module.exports = async function handler(req, res) {
 
   try {
     // 1. REGISTER
-    if (pathname === '/api/auth/register' && req.method === 'POST') {
+    if (pathname === '/auth/register' && req.method === 'POST') {
       const { email, password } = req.body;
       if (!email || !password) {
         return res.status(400).json({ msg: 'Email and password are required.' });
@@ -47,7 +47,7 @@ module.exports = async function handler(req, res) {
     }
 
     // 2. LOGIN
-    if (pathname === '/api/auth/login' && req.method === 'POST') {
+    if (pathname === '/auth/login' && req.method === 'POST') {
       const { email, password } = req.body;
       if (!email || !password) {
         return res.status(400).json({ msg: 'Email and password are required.' });
@@ -69,7 +69,7 @@ module.exports = async function handler(req, res) {
     }
 
     // 3. ME (Profile info)
-    if (pathname === '/api/auth/me' && req.method === 'GET') {
+    if (pathname === '/auth/me' && req.method === 'GET') {
       const user = await verifyToken(req);
       if (!user) {
         return res.status(401).json({ msg: 'Unauthorized' });
@@ -89,7 +89,7 @@ module.exports = async function handler(req, res) {
     }
 
     // 4. ROTATE API KEY
-    if (pathname === '/api/auth/rotate-api-key' && req.method === 'POST') {
+    if (pathname === '/auth/rotate-api-key' && req.method === 'POST') {
       const user = await verifyToken(req);
       if (!user) {
         return res.status(401).json({ msg: 'Unauthorized' });
