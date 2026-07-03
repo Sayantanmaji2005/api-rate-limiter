@@ -1,5 +1,7 @@
 # API Rate Limiter Service (Java)
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Sayantanmaji2005/api-rate-limiter)
+
 Production-style API rate limiter with a Java backend and Java-served web UI.
 
 ## Features
