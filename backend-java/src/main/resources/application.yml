@@ -6,6 +6,7 @@ spring:
   data:
     mongodb:
       uri: ${MONGO_URI:mongodb://127.0.0.1:27017/api-rate-limiter}
+      database: api-rate-limiter
     redis:
       url: ${SPRING_REDIS_URL:redis://127.0.0.1:6379}
   jackson:
