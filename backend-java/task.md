@@ -1,0 +1,17 @@
+- [x] Concurrency & Atomicity Enhancements in `RedisMemoryStore.java`
+- [x] Simplify `TokenBucketService.java` to delegate to `RedisMemoryStore`
+- [x] Simplify `SlidingWindowService.java` to delegate to `RedisMemoryStore`
+- [x] Implement declarative `@RateLimited` annotation
+- [x] Implement `RateLimiterInterceptor`
+- [x] Register interceptor in `CorsConfig.java`
+- [x] Simplify `ProtectedApiController.java` to use `@RateLimited`
+- [x] Create unit tests:
+  - [x] `TokenBucketServiceTest`
+  - [x] `SlidingWindowServiceTest`
+  - [x] `CircuitBreakerServiceTest`
+  - [x] ...
+- [x] Verify compilation and tests passing using `mvn test`
+- [x] Add allowed/blocked stats to `/admin/users` in `AdminController.java`
+- [x] Add Usage column header to `admin.html`
+- [x] Render Usage stats (allowed/blocked/total) in `admin.js`
+- [x] Verify server starts up and compiles cleanly
